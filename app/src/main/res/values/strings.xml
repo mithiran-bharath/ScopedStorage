@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ScopedStorage</string>
+    <string name="bannerImage">Banner Image</string>
+</resources>
