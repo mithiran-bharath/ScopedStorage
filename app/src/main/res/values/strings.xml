@@ -5,4 +5,5 @@
     <string name="readFile">Read File</string>
     <string name="getFile">Get File</string>
     <string name="checkExternalStorage">Is External Storage Enabled</string>
+    <string name="videos">Videos</string>
 </resources>
