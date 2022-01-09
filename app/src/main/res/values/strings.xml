@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ScopedStorage</string>
     <string name="bannerImage">Banner Image</string>
+    <string name="create_file">Create File</string>
+    <string name="readFile">Read File</string>
+    <string name="getFile">Get File</string>
+    <string name="checkExternalStorage">Is External Storage Enabled</string>
 </resources>

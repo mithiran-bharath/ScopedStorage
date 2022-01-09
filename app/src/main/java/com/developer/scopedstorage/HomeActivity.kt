@@ -61,7 +61,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun selectImageFromGallery() = selectImageFromGalleryResult.launch("image/*")
 
-    
+
     private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             Log.d(TAG, "Photo Path: ${it.path}")
