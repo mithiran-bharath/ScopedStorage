@@ -39,6 +39,7 @@ class VideoListActivity : AppCompatActivity() {
             mAdapter.submitList(videoList)
         }
         Log.d(TAG, "onCreate: $videoList")
+
         Toast.makeText(this, videoList.toString(), Toast.LENGTH_SHORT).show()
     }
 
