@@ -55,7 +55,8 @@ class HomeActivity : AppCompatActivity() {
         btnChooseGallery.setOnClickListener {
             selectImageFromGallery()
         }
-
+        val uri = Environment.getExternalStorageState()
+        Log.d(TAG, "onCreate: $uri")
 
     }
 

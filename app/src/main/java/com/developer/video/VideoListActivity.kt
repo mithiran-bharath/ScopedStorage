@@ -1,16 +1,15 @@
 package com.developer.video
 
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Size
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.developer.scopedstorage.databinding.ActivityVideoListBinding
 import com.developer.video.model.VideoModel
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 class VideoListActivity : AppCompatActivity() {
@@ -18,17 +17,31 @@ class VideoListActivity : AppCompatActivity() {
 
     private val TAG = "VideoListActivity"
     private lateinit var binding: ActivityVideoListBinding
-    private val videoList = mutableListOf<VideoModel>()
+    private lateinit var mAdapter:VideoAdapter
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val count = getVideoList().size
-        Log.d(TAG, "onCreate: $count")
-        Toast.makeText(this, count.toString(), Toast.LENGTH_SHORT).show()
+        mAdapter = VideoAdapter { position, video ->
+            Log.d(TAG, "onCreate: $position  ${video.name}")
+            Toast.makeText(this, video.name, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.rvVideosList.adapter = mAdapter
+
+        val videoList = getVideoList()
+
+        if(videoList.isNotEmpty()) {
+            mAdapter.submitList(videoList)
+        }
+        Log.d(TAG, "onCreate: $videoList")
+        Toast.makeText(this, videoList.toString(), Toast.LENGTH_SHORT).show()
     }
+
 
     private fun getVideoList(): List<VideoModel> {
 
@@ -77,12 +90,23 @@ class VideoListActivity : AppCompatActivity() {
                 val uri =
                     ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
 
-                videos += VideoModel(
-                    name = name,
-                    size = size,
-                    duration = duration,
-                    uri = uri
-                )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    videos += VideoModel(
+                        name = name,
+                        size = size,
+                        duration = duration,
+                        uri = uri,
+                        thumbnails = contentResolver.loadThumbnail(uri, Size(640, 480), null)
+                    )
+                } else {
+                    videos += VideoModel(
+                        name = name,
+                        size = size,
+                        duration = duration,
+                        uri = uri,
+                        thumbnails = null
+                    )
+                }
             }
 
             if (!query.isClosed) {
@@ -95,6 +119,5 @@ class VideoListActivity : AppCompatActivity() {
         return videos
 
     }
-
 
 }

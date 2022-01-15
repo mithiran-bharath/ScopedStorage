@@ -1,5 +1,6 @@
 package com.developer.video.model
 
+import android.graphics.Bitmap
 import android.net.Uri
 
 data class VideoModel(
@@ -7,5 +8,6 @@ data class VideoModel(
     val duration: Int,
     val size: Int,
     val uri: Uri,
-    val location: String ?= ""
+    val location: String ?= "",
+    var thumbnails: Bitmap?
 )
